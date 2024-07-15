@@ -17,7 +17,6 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 
-
 /**
  *
  * @author admin
@@ -193,17 +192,18 @@ public class EditProduct extends HttpServlet {
             int productID = Integer.parseInt(request.getParameter("productID"));
             String productName = request.getParameter("productName");
             int categoryID = Integer.parseInt(request.getParameter("category"));
+            int discountID = Integer.parseInt(request.getParameter("discount"));
             int sportID = Integer.parseInt(request.getParameter("sport"));
             int brandID = Integer.parseInt(request.getParameter("brand"));
             String status = request.getParameter("status");
             double inPrice = Double.parseDouble(request.getParameter("inprice"));
             double exPrice = Double.parseDouble(request.getParameter("exprice"));
-            System.out.println(inPrice+"-"+exPrice);
+            System.out.println(inPrice + "-" + exPrice);
 //            int discountID = Integer.parseInt(request.getParameter("discount"));
 //            int quantity = Integer.parseInt(request.getParameter("quantity"));
             String description = request.getParameter("description");
 
-            Product product = new Product(productID, exPrice, description, status, sportID, productName, brandID, categoryID, inPrice);
+            Product product = new Product(productID, exPrice, description, status, sportID, productName, brandID, categoryID, discountID, inPrice);
 
             System.out.println(product);
             boolean success = dao.updateProduct(product);

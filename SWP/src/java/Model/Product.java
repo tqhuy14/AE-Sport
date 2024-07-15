@@ -4,7 +4,7 @@ public class Product {
 
     private int productID;
     private int feedbackID;
-    private double price;  
+    private double price;
     private String description;
     private String status;
     private int sportID;
@@ -15,14 +15,14 @@ public class Product {
     private int subcategoryID;
     private double import_price;
     private Discount discount;
-    private ImgProduct img; 
+    private ImgProduct img;
     private ProductSizeColor sizecolor;
 
     // Constructors
     public Product() {
     }
 
-    public Product(int productID, int feedbackID, double price, String description, String status, int sportID, String productName, int brandID, int quantity, int discountID, int subcategoryID,double import_price ) {
+    public Product(int productID, int feedbackID, double price, String description, String status, int sportID, String productName, int brandID, int quantity, int discountID, int subcategoryID, double import_price) {
         this.productID = productID;
         this.feedbackID = feedbackID;
         this.price = price;
@@ -46,10 +46,10 @@ public class Product {
         this.brandID = brandID;
         this.subcategoryID = subcategoryID;
         this.import_price = import_price;
-        
+
     }
 
-    public Product(int productID, double price, String description, String status, int sportID, String productName, int brandID, int subcategoryID, double import_price) {
+    public Product(int productID, double price, String description, String status, int sportID, String productName, int brandID, int subcategoryID, int discountID, double import_price) {
         this.productID = productID;
         this.price = price;
         this.description = description;
@@ -58,12 +58,11 @@ public class Product {
         this.productName = productName;
         this.brandID = brandID;
         this.subcategoryID = subcategoryID;
+        this.discountID = discountID;
         this.import_price = import_price;
     }
 
-    
-
-    public Product(int productID, double price, String status, String productName, int quantity, int discountID, int subcategoryID) {    
+    public Product(int productID, double price, String status, String productName, int quantity, int discountID, int subcategoryID) {
         this.productID = productID;
         this.price = price;
         this.status = status;
@@ -73,7 +72,6 @@ public class Product {
         this.subcategoryID = subcategoryID;
     }
 
-    
     public int getProductID() {
         return productID;
     }
@@ -97,10 +95,6 @@ public class Product {
     public void setPrice(double price) {
         this.price = price;
     }
-
-  
-
-   
 
     public String getDescription() {
         return description;
@@ -202,6 +196,5 @@ public class Product {
     public String toString() {
         return "Product{" + "productID=" + productID + ", feedbackID=" + feedbackID + ", price=" + price + ", description=" + description + ", status=" + status + ", sportID=" + sportID + ", productName=" + productName + ", brandID=" + brandID + ", quantity=" + quantity + ", discountID=" + discountID + ", subcategoryID=" + subcategoryID + ", import_price=" + import_price + ", discount=" + discount + ", img=" + img + ", sizecolor=" + sizecolor + '}';
     }
-    
-    
+
 }

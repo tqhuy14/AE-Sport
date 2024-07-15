@@ -168,6 +168,10 @@
         <servlet-name>ReportController</servlet-name>
         <servlet-class>controllerr.ReportController</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>ManagerDiscount</servlet-name>
+        <servlet-class>admin.ManagerDiscount</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>HomePage</servlet-name>
         <url-pattern>/HomePage</url-pattern>
@@ -335,6 +339,10 @@
     <servlet-mapping>
         <servlet-name>ReportController</servlet-name>
         <url-pattern>/report</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ManagerDiscount</servlet-name>
+        <url-pattern>/managerdiscount</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>30</session-timeout>

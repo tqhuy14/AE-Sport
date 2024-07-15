@@ -56,7 +56,6 @@ public class AddUserAccount extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
     throws ServletException, IOException {
-        AdminDAO dao = new AdminDAO();
         request.getRequestDispatcher("admin/AddUserAccount.jsp").forward(request, response);
         
     } 

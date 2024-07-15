@@ -90,7 +90,7 @@
                         <button style="background: #343a40;color: white; height: 43px; border-radius: 4px " onclick="location.href = '${pageContext.request.contextPath}/adduseraccount'">Add UserAccount</button>
                     </div>
 
-                    <table style=" margin-top: 10px;">
+                    <table border="1" style=" margin-top: 10px;">
                         <tr>
                             <th>UserID</th>
                             <th>UserName</th>

@@ -24,15 +24,6 @@ public class Address {
         this.userId = userId;
     }
 
-    public int getUserId() {
-        return userId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-    
-
     public int getAddressId() {
         return addressId;
     }
@@ -48,5 +39,15 @@ public class Address {
     public void setAddress(String address) {
         this.address = address;
     }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+   
     
 }

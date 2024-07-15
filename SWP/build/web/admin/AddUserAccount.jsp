@@ -29,36 +29,40 @@
             />
     </head>
     <body>
-        <jsp:include page="HeaderAdmin.jsp"/>
         <div class="row">
             <div class="col-2 border-4 border-black" style="padding-right: 0px;">
                 <jsp:include page="AdministratorPage.jsp"/>
             </div>
 
 
-            <div class="col-10" style="padding: 10px">
-                <form action="adduseraccount" method="post" style="width: 600px">
-                    <h1 style="text-align: center">Thêm tài khoản mới</h1>
-                    FullName : <input type="text" name="fname" value="${param.fname}" required/><br/>
-                    Address : <input type="text" name="address" value="${param.address}" required/><br/>
-                    <div class="a1">
-                        UserName : <input type="text" name="uname" value="${param.uname}" required/> <h5 style="color: red; font-size: 0.5rem ">${error2}</h5>
-                    </div>
-                    Password : <input type="text" name="pword" value="${param.pword}" required/><br/>
-                    <div class="a1">
-                        Email : <input type="email" name="email" value="${param.email}" required/> <h5 style="color: red; font-size: 0.5rem">${error3}</h5>
-                    </div>
-                    Phone : <input type="text" name="phone" value="${param.phone}" required/><br/>
-                    Image : <br><input type="file" name="img" value="${param.img}" /><br/>
-                    
-                    <div style="display: flex">
-                        <input type="submit" value="Add"/><br/>
-                        <input type="reset" value="Reset"/>
-                    </div>
+            <div class="col-10" style="background: #e2e7e8">
+                <jsp:include page="HeaderAdmin.jsp"/>
 
-                </form>
+
+                <div style="margin: 30px; background: white; padding: 20px; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
+                    <form action="adduseraccount" method="post" style="width: 600px">
+                        <h1 style="text-align: center">Thêm tài khoản mới</h1>
+                        FullName : <input type="text" name="fname" value="${param.fname}" required/><br/>
+                        Address : <input type="text" name="address" value="${param.address}" required/><br/>
+                        <div class="a1">
+                            UserName : <input type="text" name="uname" value="${param.uname}" required/> <h5 style="color: red; font-size: 0.5rem ">${error2}</h5>
+                        </div>
+                        Password : <input type="text" name="pword" value="${param.pword}" required/><br/>
+                        <div class="a1">
+                            Email : <input type="email" name="email" value="${param.email}" required/> <h5 style="color: red; font-size: 0.5rem">${error3}</h5>
+                        </div>
+                        Phone : <input type="text" name="phone" value="${param.phone}" required/><br/>
+                        Image : <br><input type="file" name="img" value="${param.img}" /><br/>
+
+                        <div style="display: flex">
+                            <input type="submit" value="Add"/><br/>
+                            <input type="reset" value="Reset"/>
+                        </div>
+
+                    </form>
+                </div>
             </div>
- 
 
+        </div>
     </body>
 </html>

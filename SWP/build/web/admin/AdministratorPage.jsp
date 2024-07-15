@@ -70,13 +70,14 @@
                 <a><i class="bi bi-border-width" style="padding-right: 7px"></i> Sản Phẩm</a>
 
                 <ul style="" class="submenu">
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managerproduct"><i class="bi bi-bag-dash-fill" style="padding-right: 7px"></i>Danh sách Sản Phẩm</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managerproduct"><i class="bi bi-bag-dash-fill" style="padding-right: 7px"></i>Danh Sách Sản Phẩm</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managerdiscount"><i class="bi bi-calendar2-event" style="padding-right: 7px" ></i>Danh Sách Sự Kiện</a></li>
                     <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managerbrand"><i class="bi bi-buildings" style="padding-right: 7px"></i>Danh Sách Thương Hiệu</a></li>
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersport"><i class="bi bi-cookie" style="padding-right: 7px" ></i>Môn thể thao</a></li>
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersize"><i class="bi bi-box2" style="padding-right: 7px" ></i>Kích cỡ</a></li>
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managercolor"><i class="bi bi-palette" style="padding-right: 7px" ></i>Màu sắc</a></li>
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managercategory"><i class="bi bi-journals" style="padding-right: 7px" ></i>Danh sách danh mục</a></li>
-                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersubcategory"><i class="bi bi-journal" style="padding-right: 7px" ></i>Danh sách thể loại</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersport"><i class="bi bi-cookie" style="padding-right: 7px" ></i>Môn Thể Thao</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersize"><i class="bi bi-box2" style="padding-right: 7px" ></i>Kích Cỡ</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managercolor"><i class="bi bi-palette" style="padding-right: 7px" ></i>Màu Sắc</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managercategory"><i class="bi bi-journals" style="padding-right: 7px" ></i>Danh Sách Danh Mục</a></li>
+                    <li class="submenu-item"><a style="width: 120%" href="${pageContext.request.contextPath}/managersubcategory"><i class="bi bi-journal" style="padding-right: 7px" ></i>Danh Sách Thể Loại</a></li>                 
                 </ul>
             </div>
         </div>

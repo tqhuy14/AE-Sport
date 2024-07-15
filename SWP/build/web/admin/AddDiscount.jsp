@@ -1,6 +1,6 @@
 <%-- 
-    Document   : AddUserAccount
-    Created on : May 20, 2024, 4:27:24 PM
+    Document   : AddDiscount
+    Created on : Jul 14, 2024, 1:38:21 AM
     Author     : admin
 --%>
 
@@ -40,29 +40,26 @@
 
 
                 <div style="margin: 30px; background: white; padding: 20px; border-radius: 10px; display: flex; justify-content: center; align-items: center;">
-                    <form action="adduseraccount" method="post" style="width: 600px">
-                        <h1 style="text-align: center">Thêm tài khoản mới</h1>
-                        FullName : <input type="text" name="fname" value="${param.fname}" required/><br/>
-                        Address : <input type="text" name="address" value="${param.address}" required/><br/>
+                    <form action="${pageContext.request.contextPath}/managerdiscount?key=add" method="post" style="width: 600px; font-weight: bold">
+                        <h1 style="text-align: center">Thêm sư kiện giảm giá mới</h1>
                         <div class="a1">
-                            UserName : <input type="text" name="uname" value="${param.uname}" required/> <h5 style="color: red; font-size: 0.5rem ">${error2}</h5>
+                            Tên sự kiện : <input type="text" name="dname" value="${param.dname}" required/> <h5 style="color: red; font-size: 0.7rem ">${error1}</h5>
                         </div>
-                        Password : <input type="text" name="pword" value="${param.pword}" required/><br/>
-                        <div class="a1">
-                            Email : <input type="email" name="email" value="${param.email}" required/> <h5 style="color: red; font-size: 0.5rem">${error3}</h5>
+                        Phần trăm giảm giá(%) : <input type="text" name="amount" value="${param.amount}" required/><br/>
+                        <div class="a1" style="margin-top: 10px">
+                            Ngày bắt đầu : <br><input style="width: 560px; height: 40px" type="date" name="startdate" value="${param.startdate}" /><br/>
                         </div>
-                        Phone : <input type="text" name="phone" value="${param.phone}" required/><br/>
-                        Image : <br><input type="file" name="img" value="${param.img}" /><br/>
+                        <div class="a1" style="margin-top: 20px">
+                            Ngày kết thúc : <br><input style="width: 560px; height: 40px" type="date" name="enddate" value="${param.enddate}" required/> <h5 style="color: red; font-size: 0.7rem">${error2}</h5>
+                        </div>
 
                         <div style="display: flex">
                             <input type="submit" value="Add"/><br/>
-                            <input type="reset" value="Reset"/>
+                            <a style="margin-left: 20px ; width: 300px; height: 44px; margin-top: 10px" href="${pageContext.request.contextPath}/managerdiscount" class="btn btn-dark">Cancel</a>
                         </div>
 
                     </form>
                 </div>
             </div>
-
-        </div>
     </body>
 </html>

@@ -195,7 +195,7 @@
                             <td>
                                 <a href="${pageContext.request.contextPath}/editproduct?pID=<%= p.getProductID()%>" class="edit-link"><span><i class="bi bi-pencil-square"></i></span></a> &nbsp;&nbsp;
                                 <a href="${pageContext.request.contextPath}/deleteproduct?pID=<%= p.getProductID()%>" class="delete-link" onclick="return confirm('Bạn có chắc muốn xóa không?');"><span><i class="bi bi-trash3-fill"></i></span></a> &nbsp;&nbsp;
-                                <a href="${pageContext.request.contextPath}/viewproduct?pID=<%= p.getProductID()%>" class="update-link"><span><i class="bi bi-eye-fill"></i></span></a> &nbsp;&nbsp;
+<!--                                <a href="${pageContext.request.contextPath}/viewproduct?pID=<%= p.getProductID()%>" class="update-link"><span><i class="bi bi-eye-fill"></i></span></a> &nbsp;&nbsp;-->
                             </td>
                         </tr>
                         <%
@@ -227,7 +227,7 @@
                             <form action="${pageContext.request.contextPath}/managerproduct" method="post">
                                 <div class="mb-3">
                                     <label for="numberColor" class="form-label">Nhập số lượng màu của sản </label>
-                                    <input type="text" class="form-control" id="numberColor" name="numberColor" required>
+                                    <input min="1" type="number" class="form-control" id="numberColor" name="numberColor" required>
                                 </div>
                                 <button style="background-color: #212529" type="submit" class="btn btn-primary">Add</button>
 

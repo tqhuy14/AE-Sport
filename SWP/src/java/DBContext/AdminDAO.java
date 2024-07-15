@@ -34,26 +34,10 @@ import java.util.ArrayList;
  * @author admin
  */
 public class AdminDAO extends DBContext {
-// DISCOUNT ====================================================================================================================================================
-    // lấy ra discount theo ID
-    public Discount getDiscountByID(int did) {
-        String sql = "SELECT * FROM [dbo].[Discount] where [discount_ID]=?";
-        try {
-            PreparedStatement st = connection.prepareStatement(sql);
-            st.setInt(1, did);
-            ResultSet rs = st.executeQuery();
-            if (rs.next()) {
-                Discount d = new Discount(rs.getInt("discount_ID"),
-                        rs.getInt("discount_amount"));
-                return d;
-            }
-        } catch (SQLException e) {
-            System.out.println(e);
-        }
-        return null;
-    }
+
 // PRODUCT ===================================================================================================================================================
     // lấy ra tất cả ảnh của 1 product theo ID
+
     public ArrayList<ImgProduct> getImgProductByProductID(int pid) {
         ArrayList<ImgProduct> list = new ArrayList<>();
         String sql = "SELECT * FROM [dbo].[ImgProduct] where [product_ID]=?";
@@ -187,7 +171,7 @@ public class AdminDAO extends DBContext {
     // Thêm 1 sản phẩm 
     public boolean insertProduct(Product p) {
         try {
-                String sql = "insert into [Product]([price],[description],[status],[Sport_ID],[product_Name],[Brand_ID],[Subcategory_ID],[import_price]) values(?,?,?,?,?,?,?,?)";
+            String sql = "insert into [Product]([price],[description],[status],[Sport_ID],[product_Name],[Brand_ID],[Subcategory_ID],[import_price]) values(?,?,?,?,?,?,?,?)";
             PreparedStatement st = connection.prepareStatement(sql);
 
             st.setDouble(1, p.getPrice());
@@ -313,7 +297,7 @@ public class AdminDAO extends DBContext {
     // Chỉnh sửa sản phẩm
     public boolean updateProduct(Product p) {
         try {
-            String sql = " UPDATE [Product] SET [price] = ?, [description] = ?,[status] = ?,[Sport_ID] = ?,[product_Name] = ?, [Brand_ID] = ?, [Subcategory_ID] = ?,[import_price] = ? WHERE [product_ID] = ?";
+            String sql = " UPDATE [Product] SET [price] = ?, [description] = ?,[status] = ?,[Sport_ID] = ?,[product_Name] = ?, [Brand_ID] = ?, [Subcategory_ID] = ?,[discount_ID] = ?, [import_price] = ? WHERE [product_ID] = ?";
             PreparedStatement st = connection.prepareStatement(sql);
 
             st.setDouble(1, p.getPrice());
@@ -323,8 +307,9 @@ public class AdminDAO extends DBContext {
             st.setString(5, p.getProductName());
             st.setInt(6, p.getBrandID());
             st.setInt(7, p.getSubcategoryID());
-            st.setDouble(8, p.getImport_price());
-            st.setInt(9, p.getProductID());
+            st.setInt(8, p.getDiscountID());
+            st.setDouble(9, p.getImport_price());
+            st.setInt(10, p.getProductID());
             st.executeUpdate();
             return true;
         } catch (Exception e) {
@@ -362,7 +347,7 @@ public class AdminDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     // xóa ảnh sản phẩm productCart
     public void deleteProductCart(int productId) {
 
@@ -375,6 +360,7 @@ public class AdminDAO extends DBContext {
             System.out.println(e);
         }
     }
+
     // xóa ảnh sản phẩm bằng pID
     public void deleteProductImg(int productId) {
 
@@ -387,7 +373,7 @@ public class AdminDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     // xóa ảnh sản phẩm bằng imgID
     public void deleteProductImgByimgID(int imgID) {
 
@@ -413,7 +399,7 @@ public class AdminDAO extends DBContext {
             System.out.println(e);
         }
     }
-    
+
     // xóa sizecolor sản phẩm 
     public void deleteProductSizeColor(int colorID, int sizeID, int productID) {
 
@@ -491,7 +477,7 @@ public class AdminDAO extends DBContext {
         }
         return null;
     }
-    
+
     // lấy ra 1 Color theo tên ColorID
     public Color getColorByCID(int cID) {
         String sql = "SELECT * FROM [dbo].[Color] where [color_id]=?";
@@ -580,7 +566,7 @@ public class AdminDAO extends DBContext {
         }
         return null;
     }
-    
+
     // lấy ra 1 Size theo tên SizeID
     public Size getSizeBySID(int sID) {
         String sql = "SELECT * FROM [dbo].[Size] where [size_ID]=?";
@@ -693,6 +679,121 @@ public class AdminDAO extends DBContext {
             st.executeUpdate();
         } catch (Exception e) {
             System.out.println(e);
+        }
+    }
+
+// DISCOUNT=====================================================================================================================================
+    // Lấy ra tất cả Discount của hệ thống
+    public ArrayList<Discount> getAllDiscount() {
+        ArrayList<Discount> list = new ArrayList<>();
+        String sql = "SELECT * FROM [Discount]";
+
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            ResultSet rs = st.executeQuery();
+            while (rs.next()) {
+                Discount d = new Discount(rs.getInt("discount_ID"),
+                        rs.getInt("discount_amount"),
+                        rs.getString("discount_Name"),
+                        rs.getDate("start_date"),
+                        rs.getDate("end_date")
+                );
+                list.add(d);
+            }
+
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return list;
+    }
+
+    // lấy ra 1 Discount theo tên ID
+    public Discount getDiscountByID(int dID) {
+        String sql = "SELECT * FROM [dbo].[Discount] where [discount_ID]=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, dID);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Discount d = new Discount(rs.getInt("discount_ID"),
+                        rs.getInt("discount_amount"),
+                        rs.getString("discount_Name"),
+                        rs.getDate("start_date"),
+                        rs.getDate("end_date")
+                );
+                return d;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+    
+    // lấy ra 1 Discount theo tên Name
+    public Discount getDiscountByName(String name) {
+        String sql = "SELECT * FROM [dbo].[Discount] where [discount_Name]=?";
+        try {
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setString(1, name);
+            ResultSet rs = st.executeQuery();
+            if (rs.next()) {
+                Discount d = new Discount(rs.getInt("discount_ID"),
+                        rs.getInt("discount_amount"),
+                        rs.getString("discount_Name"),
+                        rs.getDate("start_date"),
+                        rs.getDate("end_date")
+                );
+                return d;
+            }
+        } catch (SQLException e) {
+            System.out.println(e);
+        }
+        return null;
+    }
+
+    // thêm 1 Discount
+    public void insertDiscount(Discount newdiscount) throws Exception {
+        try {
+            String sql = "insert into [Discount]([discount_amount],[discount_Name],[start_date],[end_date]) values(?,?,?,?)";
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, newdiscount.getDiscount_Amount());
+            st.setString(2, newdiscount.getDiscount_Name());
+            st.setDate(3, newdiscount.getStartDate());
+            st.setDate(4, newdiscount.getEndDate());
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+    
+    // Update 1 Discount
+    public void updateDiscount(Discount d) throws Exception {
+        try {
+            String sql = " UPDATE [Discount] SET [discount_amount] = ?, [discount_Name] = ?, [start_date] = ?, [end_date] = ?  WHERE [discount_ID] = ? ";
+            PreparedStatement st = connection.prepareStatement(sql);
+
+            st.setInt(1, d.getDiscount_Amount());
+            st.setString(2, d.getDiscount_Name());
+            st.setDate(3, d.getStartDate());
+            st.setDate(4, d.getEndDate());
+            st.setInt(5, d.getDiscount_ID());
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    // xóa 1 Discount by ID
+    public void deleteDiscountByID(int dID) throws Exception {
+
+        try {
+            String sql = "delete from [Discount] where [discount_ID] = ?";
+            PreparedStatement st = connection.prepareStatement(sql);
+            st.setInt(1, dID);
+            st.executeUpdate();
+        } catch (Exception e) {
+            throw e;
         }
     }
 
@@ -1770,6 +1871,7 @@ public class AdminDAO extends DBContext {
 //            dao.updateProductColorSize(1, 1, 33, 50);
 //        Product p = new Product(123, "", "none", 0, "Giay Cao", 0, 1, 0);
 //        System.out.println(dao.insertProduct(p));
-
+        System.out.println(dao.getDiscountByName("womanday"));
+              
     }
 }

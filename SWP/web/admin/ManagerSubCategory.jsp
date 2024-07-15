@@ -30,6 +30,32 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
             />
+        
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            table th, table td {
+                border: none; /* Remove all borders */
+                padding: 8px;
+                text-align: center;
+            }
+
+            table tr {
+                border-bottom: 1px solid #ddd; /* Add a border only to the bottom of each row */
+                background: #f8f9fa;
+            }
+
+            table tr:last-child {
+                border-bottom: none; /* Remove the border from the last row */
+            }
+
+            table th {
+                background-color: #343a40;
+            }
+        </style>
     </head>
     <body>
         <div class="row">
@@ -88,7 +114,7 @@
                         <button style="background-color: #212529; border-bottom: none; height: 37px; margin-right: 3%" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addSubCategoryModal">Add</button>
                     </div>
 
-                    <table border="1px solid" style="border-collapse: collapse">
+                    <table border="1" style="border-collapse: collapse">
                         <tr>
                             <th>SubCategoryID</th>
                             <th>SubCategoryName</th>

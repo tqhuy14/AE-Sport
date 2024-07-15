@@ -3,6 +3,7 @@
     Created on : Jun 3, 2024, 5:33:35 PM
     Author     : admin
 --%>
+<%@page import="Model.Discount"%>
 <%@page import="entity.Brand"%>
 <%@page import="entity.sport"%>
 <%@page import="Model.Product"%>
@@ -101,6 +102,7 @@
                             ArrayList<SubCategory> categories = dao.getAllSubCategory();
                             ArrayList<sport> sports = dao.getAllSport();
                             ArrayList<Brand> brands = dao.getAllBrand();
+                            ArrayList<Discount> discounts = dao.getAllDiscount();
                             ArrayList<ImgProduct> listImg = dao.getImgProductByProductID(Integer.parseInt(productID));
                             ArrayList<ProductSizeColor> listSC = dao.getAllProductSizeColorByPID(Integer.parseInt(productID));
                             if (product != null) {
@@ -118,8 +120,8 @@
                                             for (int i = 0; i < listImg.size(); i++) {
                                                 ImgProduct img = listImg.get(i);
                                         %>
-                                        <div class="carousel-item <%= i == 0 ? "active" : "" %>">
-                                            <img src="img/product/<%=img.getImgUrl()%>" class="d-block w-100" alt="Product Image <%= i + 1 %>">
+                                        <div class="carousel-item <%= i == 0 ? "active" : ""%>">
+                                            <img src="img/product/<%=img.getImgUrl()%>" class="d-block w-100" alt="Product Image <%= i + 1%>">
                                         </div>
                                         <%
                                             }
@@ -151,10 +153,10 @@
                                                 for (ImgProduct img : listImg) {
                                             %>
                                             <tr>
-                                                <td><img src="img/product/<%= img.getImgUrl() %>" alt="Product Image" style="width: 50px; height: 50px;"></td>
-                                                <td><%= img.getImgUrl() %></td>
+                                                <td><img src="img/product/<%= img.getImgUrl()%>" alt="Product Image" style="width: 50px; height: 50px;"></td>
+                                                <td><%= img.getImgUrl()%></td>
                                                 <td>
-                                                    <input style="width: 20px; height: 20px"type="checkbox" name="imgID" value="<%= img.getImgID() %>">
+                                                    <input style="width: 20px; height: 20px"type="checkbox" name="imgID" value="<%= img.getImgID()%>">
                                                 </td>
                                             </tr>
                                             <%
@@ -174,19 +176,19 @@
                         <div class="col-6">
                             <form action="editproduct" method="post" class="row">
                                 <div class="col-12" style="background-color: wheat;">
-                                    <input type="hidden" name="productID" value="<%= product.getProductID() %>"/>
+                                    <input type="hidden" name="productID" value="<%= product.getProductID()%>"/>
                                     <div class="row mb-3 align-items-center" style="margin-top: 15px">
                                         <label for="productName" class="col-sm-4 col-form-label">Tên sản phẩm</label>
                                         <div class="col-sm-8">
-                                            <input type="text" class="form-control" id="productName" name="productName" value="<%= product.getProductName() %>" required>
+                                            <input type="text" class="form-control" id="productName" name="productName" value="<%= product.getProductName()%>" required>
                                         </div>
                                     </div>
                                     <div class="row mb-3 align-items-center">
                                         <label for="category" class="col-sm-4 col-form-label">Thể loai</label>
                                         <div class="col-sm-8">
                                             <select id="category" name="category" class="form-select" required>
-                                                <% for (SubCategory category : categories) { %>
-                                                <option value="<%= category.getCategory_ID() %>" <%= category.getCategory_ID() == product.getSubcategoryID() ? "selected" : "" %>><%= category.show() %></option>
+                                                <% for (SubCategory category : categories) {%>
+                                                <option value="<%= category.getCategory_ID()%>" <%= category.getCategory_ID() == product.getSubcategoryID() ? "selected" : ""%>><%= category.show()%></option>
                                                 <% } %>
                                             </select>
                                         </div>
@@ -195,8 +197,8 @@
                                         <label for="sport" class="col-sm-4 col-form-label">Môn thể thao</label>
                                         <div class="col-sm-8">
                                             <select id="sport" name="sport" class="form-select" required>
-                                                <% for (sport sport : sports) { %>
-                                                <option value="<%= sport.getSport_Id() %>" <%= sport.getSport_Id() == product.getSportID() ? "selected" : "" %>><%= sport.getNameAndClb() %></option>
+                                                <% for (sport sport : sports) {%>
+                                                <option value="<%= sport.getSport_Id()%>" <%= sport.getSport_Id() == product.getSportID() ? "selected" : ""%>><%= sport.getNameAndClb()%></option>
                                                 <% } %>
                                             </select>
                                         </div>
@@ -205,9 +207,9 @@
                                         <label for="brand" class="col-sm-4 col-form-label">Thương hiệu</label>
                                         <div class="col-sm-8">
                                             <select id="brand" name="brand" class="form-select" required>
-                                                <% for (Brand brand : brands) { %>
-                                                <option value="<%= brand.getId() %>" <%= brand.getId() == product.getBrandID() ? "selected" : "" %>><%= brand.getName() %></option>
-                                                <% } %>
+                                                <% for (Brand brand : brands) {%>
+                                                <option value="<%= brand.getId()%>" <%= brand.getId() == product.getBrandID() ? "selected" : ""%>><%= brand.getName()%></option>
+                                                <% }%>
                                             </select>
                                         </div>
                                     </div>
@@ -216,10 +218,10 @@
                                         <div class="col-sm-8">
                                             <select id="status" name="status" class="form-select" required>
                                                 <option value="Normal" ${param.status == "Normal" ? "selected" : ""}>Normal</option>
-                                                <option value="New" <%= product.getStatus().equals("New") ? "selected" : "" %>>New</option>
-                                                <option value="Hot" <%= product.getStatus().equals("Hot") ? "selected" : "" %>>Hot</option>
-                                                <option value="Sale" <%= product.getStatus().equals("Sale") ? "selected" : "" %>>Sale</option>
-                                                <option value="Hide" <%= product.getStatus().equals("Hide") ? "selected" : "" %>>Hide</option>
+                                                <option value="New" <%= product.getStatus().equals("New") ? "selected" : ""%>>New</option>
+                                                <option value="Hot" <%= product.getStatus().equals("Hot") ? "selected" : ""%>>Hot</option>
+                                                <option value="Sale" <%= product.getStatus().equals("Sale") ? "selected" : ""%>>Sale</option>
+                                                <option value="Hide" <%= product.getStatus().equals("Hide") ? "selected" : ""%>>Hide</option>
                                             </select>
                                         </div>
                                     </div>
@@ -237,18 +239,30 @@
                                         </div>
                                     </div>
                                     <div class="row mb-3 align-items-center">
-                                        <label for="discount" class="col-sm-4 col-form-label">Giảm giá</label>
+                                        <label for="brand" class="col-sm-4 col-form-label">Giảm giá</label>
                                         <div class="col-sm-8">
-                                            <input type="number" step="0.01" class="form-control" id="discount" name="discount" value="<%= product.getDiscountID() %>" min="0" required>
+                                            <select id="discount" name="discount" class="form-select" required>
+                                                <% for (Discount discount : discounts) {%>
+                                                <option value="<%= discount.getDiscount_ID() %>" <%= discount.getDiscount_ID() == product.getDiscountID() ? "selected" : ""%>><%= discount.getDiscount_Name()+" ("+discount.getDiscount_Amount()+"%)" %></option>
+                                                <% }%>
+                                            </select>
                                         </div>
                                     </div>
                                     <div class="row mb-3 align-items-center">
                                         <label for="quantity" class="col-sm-4 col-form-label">Tổng số lượng</label>
                                         <div class="col-sm-8">
-                                            <input type="number" class="form-control" id="quantity" name="quantity" value="<%= product.getQuantity() %>" readonly>
+                                            <input type="number" class="form-control" id="quantity" name="quantity" value="<%= product.getQuantity()%>" readonly>
+                                        </div>
+                                    </div>
+                                    <div style="padding-bottom: 10px">
+                                        <label style="font-weight: bold; margin-bottom: 5px;" for="description">Mô tả:</label><br>
+                                        <div class="form-group" style="display: flex;justify-content: center">
+                                            <textarea id="description" name="description" required><%= product.getDescription()%></textarea>
                                         </div>
                                     </div>
                                 </div>
+
+
 
                                 <div class=" col-12" style="background-color: wheat">
                                     <!-- Product Size Color Table -->
@@ -267,7 +281,7 @@
                                             <tr>
                                                 <td><%= dao.getColorByCID(psc.getColorID()).getColor_Name()%></td>
                                                 <td><%= dao.getSizeBySID(psc.getSizeID()).getSize_Name()%></td>
-                                                <td><%= psc.getQuantity() %></td>
+                                                <td><%= psc.getQuantity()%></td>
                                             </tr>
                                             <%
                                                 }
@@ -276,29 +290,25 @@
                                     </table>
                                     <br>
 
-                                    <div style="padding-bottom: 10px">
-                                        <label style="font-weight: bold; margin-bottom: 5px; margin: 10px" for="description">Mô tả:</label><br>
-                                        <div class="form-group" style="display: flex;justify-content: center">
-                                            <textarea id="description" name="description" required><%= product.getDescription() %></textarea>
-                                        </div>
-                                    </div>
+
                                     <input type="hidden" value="<%=request.getParameter("pID")%>" name="pID">
                                     <div style="display: flex; justify-content: center; margin-bottom: 20px">
-                                        <a style="margin-right: 40px" href="${pageContext.request.contextPath}/admin/EditProductColorSize.jsp?pID=<%= request.getParameter("pID") %>" class="btn btn-dark">Sửa màu và kích cỡ</a>
-                                        <button style="background-color: #212529; border-bottom: none; height: 37px; margin-right: 40px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addColorSize">Thêm màu và kích cỡ</button>
+                                        <a style="margin-right: 40px" href="${pageContext.request.contextPath}/admin/EditProductColorSize.jsp?pID=<%= request.getParameter("pID")%>" class="btn btn-dark">Sửa màu và kích cỡ</a>
+                                        <button style="background-color: #212529; margin-right: 40px;" type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addColorSize">Thêm màu và kích cỡ</button>
                                         <button style="margin-right: 20px" type="submit" class="btn btn-dark">Lưu thay đổi</button>
-                                        <a style="margin-left: 20px" href="${pageContext.request.contextPath}/managerproduct" class="btn btn-dark">Cancel</a>
+                                        <a style="margin-left: 20px; display: flex; align-items: center; justify-content: center;" href="${pageContext.request.contextPath}/managerproduct" class="btn btn-dark">Cancel</a>
+
                                     </div>
                                 </div>
                             </form>
 
                             <%
-                                    } else {
+                            } else {
                             %>
                             <p>Product not found.</p>
                             <%
-                                    }
-                                } else {
+                                }
+                            } else {
                             %>
                             <p>Invalid product ID.</p>
                             <%

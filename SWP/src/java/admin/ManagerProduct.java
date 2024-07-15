@@ -112,7 +112,6 @@ public class ManagerProduct extends HttpServlet {
         return filteredList;
     }
 
-    // tin thei the loai
     // tim theo the loai
     private ArrayList<Product> filterProductsByCategory(ArrayList<Product> products, String categoryID) {
         ArrayList<Product> filteredList = new ArrayList<>();

@@ -28,7 +28,58 @@
             rel="stylesheet"
             href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
             />
+        <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            table th, table td {
+                border: none; /* Remove all borders */
+                padding: 8px;
+                text-align: center;
+            }
+
+            table tr {
+                border-bottom: 1px solid #ddd; /* Add a border only to the bottom of each row */
+                background: #f8f9fa;
+            }
+
+            table tr:last-child {
+                border-bottom: none; /* Remove the border from the last row */
+            }
+
+            table th {
+                background-color: #343a40;
+            }
+        </style>
     </head>
+    
+    <style>
+            table {
+                border-collapse: collapse;
+                width: 100%;
+            }
+
+            table th, table td {
+                border: none; /* Remove all borders */
+                padding: 8px;
+                text-align: center;
+            }
+
+            table tr {
+                border-bottom: 1px solid #ddd; /* Add a border only to the bottom of each row */
+                background: #f8f9fa;
+            }
+
+            table tr:last-child {
+                border-bottom: none; /* Remove the border from the last row */
+            }
+
+            table th {
+                background-color: #343a40;
+            }
+        </style>
     <body>
         <div class="row">
             <div class="col-2 border-4 border-black" style="padding-right: 0px;">
