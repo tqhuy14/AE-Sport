@@ -39,10 +39,10 @@ public class ManageSaleProducts extends HttpServlet {
         CategoryContext b = new CategoryContext();
 
         String select1 = request.getParameter("select1");
-
         String productID = request.getParameter("productID");
         String category = request.getParameter("category");
         String Subcategory = request.getParameter("Subcategory");
+
         request.setAttribute("select1", select1);
         request.setAttribute("category", category);
         request.setAttribute("Subcategory", Subcategory);
@@ -51,7 +51,6 @@ public class ManageSaleProducts extends HttpServlet {
         if ("2".equals(type)) {
             p.deleteStatusProduct(Integer.parseInt(productID));
         }
-
         if (select1 != null && select1 != "") {
             ArrayList<Category> listCA = b.getCategorys(select1);
             request.setAttribute("listCA", listCA);
@@ -61,9 +60,10 @@ public class ManageSaleProducts extends HttpServlet {
             ArrayList<SubCategory> listSub = b.getSubCategorys(Integer.parseInt(category));
             request.setAttribute("listSub", listSub);
         }
+      
         ArrayList<product> saleProducts = p.getproductsbyStatus("sale");
+        System.out.println(saleProducts);
         request.setAttribute("SaleProducts", saleProducts);
-
         request.getRequestDispatcher("view/Product/ManageSaleProducts.jsp").forward(request, response);
     }
 
@@ -82,7 +82,6 @@ public class ManageSaleProducts extends HttpServlet {
         ProductContext p = new ProductContext();
         CategoryContext b = new CategoryContext();
 
-
         String select1 = request.getParameter("select1");
         request.setAttribute("select1", select1);
         String category = request.getParameter("category");
@@ -93,7 +92,7 @@ public class ManageSaleProducts extends HttpServlet {
         String type = request.getParameter("type");
 
         if ("1".equals(type)) {
-            String productID = request.getParameter("productID"); 
+            String productID = request.getParameter("productID");
             System.out.println(productID);
             String discount = request.getParameter("discount");
             System.out.println(discount);
@@ -113,7 +112,8 @@ public class ManageSaleProducts extends HttpServlet {
             ArrayList<SubCategory> listSub = b.getSubCategorys(Integer.parseInt(category));
             request.setAttribute("listSub", listSub);
         }
-                ArrayList<product> saleProducts = p.getproductsbyStatus("sale");
+        ArrayList<product> saleProducts = p.getproductsbyStatus("sale");
+
         request.setAttribute("SaleProducts", saleProducts);
         request.getRequestDispatcher("view/Product/ManageSaleProducts.jsp").forward(request, response);
 

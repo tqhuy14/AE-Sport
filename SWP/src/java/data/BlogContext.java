@@ -7,14 +7,18 @@ package data;
 import DBContext.DBContext;
 import entity.Blog;
 import entity.CategoryBlog;
+import entity.StatusBlog;
 import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.ZoneId;
 
 /**
  *
@@ -356,7 +360,7 @@ public class BlogContext extends DBContext {
         return list;
     }
 
-    public ArrayList<Blog> getRequestBlogPending(String type, String status) {
+    public ArrayList<Blog> getRequestBlog(String type, String status) {
         ArrayList<Blog> list = new ArrayList<>();
         try {
             String sql = "SELECT b.blog_ID,b.Title,b.date,b.img,b.detail,b.author,b.number_of_views,cb.category_Id,cb.category_Name\n"
@@ -397,19 +401,22 @@ public class BlogContext extends DBContext {
     }
 
     public void updateStatusBlog(int Blog_ID, String status, String type) {
-
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp sqlTimestamp = Timestamp.valueOf(now);
+        System.out.println(sqlTimestamp);
         try {
             String sql_update = "UPDATE [dbo].[Status_Blog]\n"
                     + "   SET \n"
                     + "      [status] =?\n"
                     + "      ,[type] = ?\n"
+                    + ",[time]=?"
                     + " WHERE blog_ID=?";
 
             PreparedStatement stm_update = connection.prepareStatement(sql_update);
             stm_update.setString(1, status);
             stm_update.setString(2, type);
-
-            stm_update.setInt(3, Blog_ID);
+            stm_update.setTimestamp(3, sqlTimestamp);
+            stm_update.setInt(4, Blog_ID);
             stm_update.executeUpdate();
 
         } catch (SQLException ex) {
@@ -435,6 +442,54 @@ public class BlogContext extends DBContext {
             Logger.getLogger(BlogContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return number;
+    }
+
+    public ArrayList<Blog> getHistoryRequestBlog(String type, String status) {
+        ArrayList<Blog> list = new ArrayList<>();
+        try {
+            String sql = "SELECT   *\n"
+                    + "           FROM [dbo].[Blog] b\n"
+                    + "    join [dbo].[Status_Blog] sb\n"
+                    + "        on b.blog_ID=sb.blog_ID\n"
+                    + "                          join \n"
+                    + "                             [dbo].[category_Blog] cb\n"
+                    + "                           on b.category_Id=cb.category_Id"
+                    + "                             where [stype] != 1\n"
+                    + "                		 and sb.status !=?\n"
+                    + "                  			 and sb.type=?";
+            PreparedStatement stm = connection.prepareStatement(sql);
+            stm.setString(1, status);
+            stm.setString(2, type);
+            ResultSet rs = stm.executeQuery();
+            while (rs.next()) {
+                Blog b = new Blog();
+                CategoryBlog ca = new CategoryBlog();
+                StatusBlog sb = new StatusBlog();
+                ca.setId(rs.getInt("category_Id"));
+                ca.setName(rs.getString("category_Name"));
+                b.setCa(ca);
+
+                sb.setStatus(rs.getString("status"));
+
+                Timestamp sqlTimestamp = rs.getTimestamp("time");
+                sb.setTime(sqlTimestamp);
+
+                sb.setType(rs.getString("type"));
+                b.setStatusBlog(sb);
+                b.setBlog_ID(rs.getInt("blog_ID"));
+                b.setDetail(rs.getString("detail"));
+                b.setDate(rs.getDate("date"));
+                b.setTitle(rs.getString("Title"));
+                b.setImg(rs.getString("img"));
+                b.setAuthorString(rs.getString("author"));
+                b.setNumber_of_views(rs.getInt("number_of_views"));
+                list.add(b);
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(BlogContext.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return list;
     }
 
 }

@@ -29,7 +29,9 @@ public class product {
     private Discount discount;
     private Category cate;
     private SubCategory subCate;
-
+    
+    
+    
     public product() {
     }
 

@@ -369,31 +369,49 @@
                             <tr>
                                 <th class="p-4 text-center">#</th>
                                 <th class="p-4 text-center">Tên Sản Phẩm</th>
-                                <th class="p-4 text-center">Giá Ban Đầu</th>
+                                <th class="p-4 text-center">Giá </th>
                                 <th class="p-4 text-center">Giảm Giá</th>
-                                <th class="p-4 text-center">Chi Tiết</th>
+                                <th class="p-4 text-center">Số lượng đã bán</th>
+                                <th class="p-4 text-center">Doanh mục</th>
                                 <th class="p-4 text-center"></th>
-
 
                             </tr>
                         </thead>
                         <tbody class="table-group-divider table-divider-color">
-                            <c:forEach items="${requestScope.SaleProducts}" var="p">
+                            <c:forEach items="${requestScope.SaleProducts}" var="p" varStatus="status">
                                 <tr class="p-3 text-center">
-                                    <th class="p-2">${p.productID}</th>
+                                    <th class="p-2">${status.index +1}</th>
                                     <td class="text-start">${p.productName}</td>
-                                    <td class="text-center">${p.price}</td>
-                                    <td class="text-center">${p.discount.discount_Amount}%</td>
+                                    <td class="text-center text-danger"> <p class="text-white-50 card-text fs-6 text-decoration-line-through mx-1 mb-0">
+                                            ${p.getPrice()}đ
+                                        </p>  ${Math.round((p.getPrice() / 100) * (100-p.getDiscount().getDiscount_Amount()))}</td>
+                                    <td class="text-center text-warning">${p.discount.discount_Amount}%</td>
+                                    <td class="text-center text-warning">${p.quantity_sold}</td>
+
+
                                     <td class="text-center">
-                                        <a href="Product?productId=${p.productID}">
-                                            <i class="bi bi-arrow-right-circle-fill fs-3"></i>
-                                        </a>
+                                        <c:if test="${p != null and p.cate != null and p.cate.type != null}">
+                                            <c:if test="${'nam'.equals(p.cate.type)}">
+                                                Nam
+                                            </c:if>
+                                            <c:if test="${'nu'.equals(p.cate.type)}">
+                                                Nữ
+                                            </c:if>
+                                            <c:if test="${'phu_kien'.equals(p.cate.type)}">
+                                                Phụ Kiện
+                                            </c:if>
+                                        </c:if>
+                                        /   <span>${p.cate.category_Name}</span>  
+                                        /   <span>${p.getSubCate().getSubcategory_Name()}</span>  
                                     </td>
-                                    <td> <a href="ManageSaleProducts?type=2&productID=${p.productID}"> <button class="Btn">
+                                    <td>
+                                        <a href="ManageSaleProducts?type=2&productID=${p.productID}"> <button class="Btn">
                                                 <div class="sign text-light">
                                                     <i class="bi bi-trash3"></i>
                                                 </div>
                                             </button>  </a> 
+
+
                                     </td>
                                 </tr>
                             </c:forEach>

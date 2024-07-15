@@ -260,7 +260,7 @@
                         </li>
                         
                         <li class="nav-item position-relative">
-                            <a href="RequestsBlog?type=1" class="nav-link" >
+                            <a href="RequestsBlog?mode=1" class="nav-link" >
                                 <div class="icon-wrap">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </div>
@@ -275,7 +275,7 @@
                         </li>
 
                         <li class="nav-item position-relative">
-                            <a href="RequestsBlog?type=2" class="nav-link " >
+                            <a href="RequestsBlog?mode=2" class="nav-link " >
                                 <div class="icon-wrap">
                                     <i class="fas fa-tachometer-alt"></i>
                                 </div>

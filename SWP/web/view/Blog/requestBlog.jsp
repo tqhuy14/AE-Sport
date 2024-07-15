@@ -66,6 +66,38 @@
             }
 
 
+
+            .download-button {
+                position: relative;
+                border-width: 0;
+                color: white;
+                font-size: 15px;
+                font-weight: 600;
+                border-radius: 4px;
+                z-index: 1;
+            }
+
+            .download-button{
+                display: flex;
+                align-items: center;
+                gap: 10px;
+                min-height: 40px;
+                padding: 0 10px;
+                border-radius: 4px;
+                z-index: 1;
+                background-color: #242a35;
+                border: solid 1px #e8e8e82d;
+                transition: all .5s cubic-bezier(0.77, 0, 0.175, 1);
+            }
+
+            .download-button:hover {
+                box-shadow:  rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+            }
+
+
+
+
+
         </style>
         <script>
             function submit() {
@@ -81,9 +113,298 @@
             </div>
             <div class="col-11">
                 <div class="container mt-5 ">
+                    <c:if test="${param.mode == '1'}">
+                        <button class="download-button float-end mb-4" data-bs-toggle="modal" data-bs-target="#history" >
+                            <div class="docs "><svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2" stroke="currentColor" height="20" width="20" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line y2="13" x2="8" y1="13" x1="16"></line><line y2="17" x2="8" y1="17" x1="16"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Lịch Sử</div>
+                        </button>
+                        <div class="modal fade" id="history" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu Thêm</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table align-middle mb-0 bg-white">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Doanh Mục</th>
+                                                    <th>Tác GIả</th>
+                                                    <th>Ngày Đăng</th>
+                                                    <th>Trạng Thái</th>
+                                                    <th>Thời Gian</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <c:forEach items="${requestScope.requestHistoryAdd}" var="re" varStatus="status">
+                                                    <tr>
+                                                        <td>
+                                                            ${status.index+1}
+                                                        </td>
+                                                        <td>
+                                                            ${re.title}
+                                                        </td>
+                                                        <td>
+                                                            ${re.ca.name}
+                                                        </td>
+                                                        <td>
+                                                            ${re.authorString}
+                                                        </td>
+                                                        <td>
+                                                            ${re.date}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.status}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.time}
+                                                        </td>
+                                                    </tr>
+
+                                                </c:forEach>
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+
 
                     <c:if test="${ not empty requestScope.requestAdd}"  >
-                        <h1 class=" my-4 ">Yêu cầu thêm tin tức</h1> 
+
+                        <h1 class=" my-5 ">Yêu cầu thêm tin tức</h1> 
+
+
+                        <table class="table  table-hover table-dark  rounded-table shadow  ">
+                            <thead class="table-dark align-middle">
+                                <tr>
+                                    <th class="p-4 text-center" >#</th>
+                                    <th class="p-4 text-center" >Tiêu Đề</th>
+                                    <th class="p-4 text-center">Ảnh</th>
+                                    <th class="p-4 text-center">Doanh Mục</th>
+                                    <th class="p-4 text-center" >Tác Giả</th>
+                                    <th class="p-4 text-center" >Ngày Đăng</th>
+                                    <th class="p-4 text-center" ></th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-group-divider table-divider-color">
+                                <c:forEach items="${requestScope.requestAdd}" var="elem"  varStatus="status">
+                                    <tr class="p-3 text-center ">
+                                        <th class="p-2">${status.index +1}</th>
+
+                                        <td class="text-start">${ elem.getTitle()}</td>
+                                        <td> 
+                                            <span  type="button"  data-bs-toggle="modal" data-bs-target="#firstModal${ elem.getBlog_ID()}">
+                                                ${ elem.getImg()}
+                                            </span>
+
+                                        </td>
+                                        <td> 
+                                            <span>${ elem.getCa().getName()   }</span>
+                                        </td>
+                                        <td> 
+                                            <span>${ elem.getAuthorString()}</span>
+
+                                        </td>
+                                        <td> 
+                                            <span>${ elem.getDate()}</span>
+
+                                        </td>
+
+
+                                        <td class="text-start"  style="width: 4rem"> 
+                                            <div class="btn-group" role="group" >
+
+                                                <form  method="post" action="RequestsBlog">
+                                                    <input type="hidden" name="accept"  value="${ elem.getBlog_ID()}">
+                                                    <input type="hidden" name="type"  value="add">
+                                                    <input type="hidden" name="mode"  value="1">
+
+
+                                                    <button onclick="submit()"   class="btn btn-outline-primary">Duyệt</button>
+                                                </form>
+                                                <form   method="post" action="RequestsBlog">
+                                                    <input type="hidden" name="type"  value="add">
+                                                    <input type="hidden" name="reject" value="${ elem.getBlog_ID()}">
+                                                    <input type="hidden" name="mode"  value="2">
+
+                                                    <button onclick="submit()" class="btn btn-outline-danger">Xóa</button>
+                                                </form>
+
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                <div class="img modal fade" id="firstModal${ elem.getBlog_ID()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+                                            <div class="modal-body">
+                                                <img src="img/blog/${ elem.getImg()}" class="img-fluid" alt="${ elem.getBlog_ID()}">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:forEach>
+
+                            </tbody>
+                        </table>
+
+
+
+                    </c:if>
+
+
+
+
+
+
+                    <c:if test="${param.mode == '2'}">
+                        <button class="download-button float-end mb-4" data-bs-toggle="modal" data-bs-target="#history" >
+                            <div class="docs "><svg class="css-i6dzq1" stroke-linejoin="round" stroke-linecap="round" fill="none" stroke-width="2" stroke="currentColor" height="20" width="20" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line y2="13" x2="8" y1="13" x1="16"></line><line y2="17" x2="8" y1="17" x1="16"></line><polyline points="10 9 9 9 8 9"></polyline></svg> Lịch Sử</div>
+                        </button>
+                        <div class="modal fade" id="history" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu Xóa</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table align-middle mb-0 bg-white">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Doanh Mục</th>
+                                                    <th>Tác GIả</th>
+                                                    <th>Ngày Đăng</th>
+                                                    <th>Trạng Thái</th>
+                                                    <th>Thời Gian</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <c:forEach items="${requestScope.requestHistoryDelete}" var="re" varStatus="status">
+                                                    <tr>
+                                                        <td>
+                                                            ${status.index+1}
+                                                        </td>
+                                                        <td>
+                                                            ${re.title}
+                                                        </td>
+                                                        <td>
+                                                            ${re.ca.name}
+                                                        </td>
+                                                        <td>
+                                                            ${re.authorString}
+                                                        </td>
+                                                        <td>
+                                                            ${re.date}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.status}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.time}
+                                                        </td>
+                                                    </tr>
+
+                                                </c:forEach>
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </c:if>
+
+
+                    <c:if test="${ not empty requestScope.requestDelete}"  >
+                        <div class="modal fade" id="history" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-xl">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Yêu cầu Xóa</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <table class="table align-middle mb-0 bg-white">
+                                            <thead class="bg-light">
+                                                <tr>
+                                                    <th>STT</th>
+                                                    <th>Tiêu đề</th>
+                                                    <th>Doanh Mục</th>
+                                                    <th>Tác GIả</th>
+                                                    <th>Ngày Đăng</th>
+                                                    <th>Trạng Thái</th>
+                                                    <th>Thời Gian</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+
+                                                <c:forEach items="${requestScope.requestHistoryDelete}" var="re" varStatus="status">
+                                                    <tr>
+                                                        <td>
+                                                            ${status.index+1}
+                                                        </td>
+                                                        <td>
+                                                            ${re.title}
+                                                        </td>
+                                                        <td>
+                                                            ${re.ca.name}
+                                                        </td>
+                                                        <td>
+                                                            ${re.authorString}
+                                                        </td>
+                                                        <td>
+                                                            ${re.date}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.status}
+                                                        </td>
+                                                        <td>
+                                                            ${re.statusBlog.time}
+                                                        </td>
+                                                    </tr>
+
+                                                </c:forEach>
+
+                                            </tbody>
+                                        </table>
+
+
+
+                                    </div>
+                                    <div class="modal-footer">
+
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Đóng</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <h1 class=" my-5 ">Yêu cầu xóa tin tức</h1> 
+
                         <table class="table  table-hover table-dark  rounded-table shadow ">
                             <thead class="table-dark align-middle">
                                 <tr>
@@ -97,9 +418,10 @@
                                 </tr>
                             </thead>
                             <tbody class="table-group-divider table-divider-color">
-                                <c:forEach items="${requestScope.requestAdd}" var="elem">
+                                <c:forEach items="${requestScope.requestDelete}" var="elem"  varStatus="status">
                                     <tr class="p-3 text-center ">
-                                        <th class="p-2">${ elem.getBlog_ID()}</th>
+                                        <th class="p-2">${status.index +1}</th>
+
                                         <td class="text-start">${ elem.getTitle()}</td>
                                         <td> 
                                             <span  type="button"  data-bs-toggle="modal" data-bs-target="#firstModal${ elem.getBlog_ID()}">
@@ -123,13 +445,15 @@
                                         <td class="text-start"  style="width: 4rem"> 
                                             <div class="btn-group" role="group" >
                                                 <form  method="post" action="RequestsBlog">
+                                                    <input type="hidden" name="type"  value="delete">
+                                                    <input type="hidden" name="mode"  value="2">
                                                     <input type="hidden" name="accept"  value="${ elem.getBlog_ID()}">
-                                                    <input type="hidden" name="type"  value="add">
-
                                                     <button onclick="submit()"   class="btn btn-outline-primary">Duyệt</button>
                                                 </form>
                                                 <form   method="post" action="RequestsBlog">
-                                                    <input type="hidden" name="type"  value="add">
+                                                    <input type="hidden" name="type"  value="delete">
+                                                    <input type="hidden" name="mode"  value="2">
+
                                                     <input type="hidden" name="reject" value="${ elem.getBlog_ID()}">
                                                     <button onclick="submit()" class="btn btn-outline-danger">Xóa</button>
                                                 </form>
@@ -170,85 +494,6 @@
                             </div>
                         </div>
                     </c:if>
-
-
-
-                    <c:if test="${ not empty requestScope.requestDelete}"  >
-                        <h1 class=" my-4 ">Yêu cầu xóa tin tức</h1> 
-                        <table class="table  table-hover table-dark  rounded-table shadow ">
-                            <thead class="table-dark align-middle">
-                                <tr>
-                                    <th class="p-4 text-center" >#</th>
-                                    <th class="p-4 text-center" >Tiêu Đề</th>
-                                    <th class="p-4 text-center">Ảnh</th>
-                                    <th class="p-4 text-center">Doanh Mục</th>
-                                    <th class="p-4 text-center" >Tác Giả</th>
-                                    <th class="p-4 text-center" >Ngày Đăng</th>
-                                    <th class="p-4 text-center" ></th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-group-divider table-divider-color">
-                                <c:forEach items="${requestScope.requestDelete}" var="elem">
-                                    <tr class="p-3 text-center ">
-                                        <th class="p-2">${ elem.getBlog_ID()}</th>
-                                        <td class="text-start">${ elem.getTitle()}</td>
-                                        <td> 
-                                            <span  type="button"  data-bs-toggle="modal" data-bs-target="#firstModal${ elem.getBlog_ID()}">
-                                                ${ elem.getImg()}
-                                            </span>
-
-                                        </td>
-                                        <td> 
-                                            <span>${ elem.getCa().getName()   }</span>
-                                        </td>
-                                        <td> 
-                                            <span>${ elem.getAuthorString()}</span>
-
-                                        </td>
-                                        <td> 
-                                            <span>${ elem.getDate()}</span>
-
-                                        </td>
-
-
-                                        <td class="text-start"  style="width: 4rem"> 
-                                            <div class="btn-group" role="group" >
-                                                <form  method="post" action="RequestsBlog">
-                                                    <input type="hidden" name="type"  value="delete">
-                                                    <input type="hidden" name="accept"  value="${ elem.getBlog_ID()}">
-                                                    <button onclick="submit()"   class="btn btn-outline-primary">Duyệt</button>
-                                                </form>
-                                                <form   method="post" action="RequestsBlog">
-                                                    <input type="hidden" name="type"  value="delete">
-                                                    <input type="hidden" name="reject" value="${ elem.getBlog_ID()}">
-                                                    <button onclick="submit()" class="btn btn-outline-danger">Xóa</button>
-                                                </form>
-
-                                            </div>
-                                        </td>
-
-                                    </tr>
-                                <div class="img modal fade" id="firstModal${ elem.getBlog_ID()}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-body">
-                                                <img src="img/blog/${ elem.getImg()}" class="img-fluid" alt="${ elem.getBlog_ID()}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:forEach>
-
-
-
-
-                            </tbody>
-                        </table>
-
-
-
-                    </c:if>
-
 
                 </div>
             </div>

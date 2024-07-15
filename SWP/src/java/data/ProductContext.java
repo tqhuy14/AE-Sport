@@ -23,11 +23,11 @@ import java.util.logging.Logger;
  * @author Hoàng Sơn
  */
 public class ProductContext extends DBContext.DBContext {
-
+    
     public ArrayList<product> getProductsonHomePage(String status) {
         ArrayList<product> list = new ArrayList<>();
         try {
-
+            
             String sql = "SELECT *\n"
                     + "  FROM [dbo].[Product] p\n"
                     + "  join [dbo].[Home_Products] h\n"
@@ -52,7 +52,7 @@ public class ProductContext extends DBContext.DBContext {
                     d.setDiscount_Amount(rs.getInt("discount_amount"));
                     p.setDiscount(d);
                 }
-
+                
                 list.add(p);
             }
         } catch (SQLException ex) {
@@ -60,7 +60,7 @@ public class ProductContext extends DBContext.DBContext {
         }
         return list;
     }
-
+    
     public product getProduct(int id) {
         product p = new product();
         try {
@@ -95,14 +95,14 @@ public class ProductContext extends DBContext.DBContext {
                 ca.setType(rs.getString("type"));
                 p.setCate(ca);
                 p.setDiscount(d);
-
+                
             }
         } catch (SQLException ex) {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return p;
     }
-
+    
     public ArrayList<ProductSizeColor> getColorandSizeofProduct(int id) {
         ArrayList<ProductSizeColor> list = new ArrayList<>();
         try {
@@ -119,7 +119,7 @@ public class ProductContext extends DBContext.DBContext {
             while (rs.next()) {
                 ProductSizeColor psc = new ProductSizeColor();
                 psc.setProductId(rs.getInt("product_ID"));
-
+                
                 Color c = new Color();
                 c.setColor_ID(rs.getInt("color_id"));
                 c.setColor_Name(rs.getString("color_Name"));
@@ -136,7 +136,7 @@ public class ProductContext extends DBContext.DBContext {
         }
         return list;
     }
-
+    
     public ArrayList<product> getproductByCondition(int Subcategory_ID, int category_ID, String type, String status) {
         ArrayList<product> list = new ArrayList<>();
         try {
@@ -171,13 +171,13 @@ public class ProductContext extends DBContext.DBContext {
                 p.setDiscount(d);
                 list.add(p);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-
+    
     public void updateProductonHome(int id, String status) {
         try {
             String sql = "UPDATE [dbo].[Home_Products]\n"
@@ -191,18 +191,23 @@ public class ProductContext extends DBContext.DBContext {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public ArrayList<product> getproductsbyStatus(String status) {
         ArrayList<product> list = new ArrayList<>();
         ImgContext imgDB = new ImgContext();
         try {
             String sqlString = "SELECT *\n"
-                    + "  FROM [dbo].[Product] p\n"
-                    + "  join [dbo].[Home_Products] hp\n"
-                    + "  on p.product_ID=hp.product_ID\n"
-                    + "left  join [dbo].[Discount] d \n"
-                    + "  on d.discount_ID=p.discount_ID\n"
-                    + "  where p.status=?";
+                    + "                FROM [dbo].[Product] p      \n"
+                    + "				left join  [dbo].[Subcategory] sc\n"
+                    + "				on sc.Subcategory_ID= p.Subcategory_ID\n"
+                    + "                left join [dbo].[Category] ca\n"
+                    + "                   on ca.category_ID= sc.category_ID\n"
+                    + "                   left  join [dbo].[Discount] d\n"
+                    + "                 on d.discount_ID=p.discount_ID\n"
+                    + "				 left join [dbo].[Home_Products] hp\n"
+                    + "				 on hp.product_ID=p.product_ID\n"
+                    + "\n"
+                    + "                     where p.status=?";
             PreparedStatement stmPreparedStatement = connection.prepareStatement(sqlString);
             stmPreparedStatement.setString(1, status);
             ResultSet rs = stmPreparedStatement.executeQuery();
@@ -211,16 +216,24 @@ public class ProductContext extends DBContext.DBContext {
                 p.setProductID(rs.getInt("product_ID"));
                 p.setProductName(rs.getString("product_Name"));
                 p.setPrice(rs.getDouble("price"));
-
-                ArrayList<img> listImg = imgDB.getImgsofProduct(rs.getInt("product_ID"));
-                p.setImage(listImg);
+                p.setQuantity_sold(rs.getInt("quantity_sold"));
+                SubCategory subCa = new SubCategory();
+                subCa.setSubcategory_ID(rs.getInt("Subcategory_ID"));
+                subCa.setSubcategory_Name(rs.getString("Subcategory_Name"));
+                p.setSubCate(subCa);
+                Category ca = new Category();
+                ca.setCategory_ID(rs.getInt("category_ID"));
+                ca.setCategory_Name(rs.getString("category_Name"));
+                ca.setType(rs.getString("type"));
+                p.setCate(ca);
+                
                 if ("sale".contains(status)) {
                     Discount d = new Discount();
                     d.setDiscount_ID(rs.getInt("discount_ID"));
                     d.setDiscount_Amount(rs.getInt("discount_amount"));
                     p.setDiscount(d);
                 }
-
+                
                 list.add(p);
             }
         } catch (SQLException ex) {
@@ -228,7 +241,7 @@ public class ProductContext extends DBContext.DBContext {
         }
         return list;
     }
-
+    
     public ArrayList<product> getproductAllArrayListByCondition(int Subcategory_ID, int category_ID, String type, String status) {
         ArrayList<product> list = new ArrayList<>();
         try {
@@ -266,13 +279,13 @@ public class ProductContext extends DBContext.DBContext {
                 p.setDiscount(d);
                 list.add(p);
             }
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return list;
     }
-
+    
     public void deleteStatusProduct(int id) {
         try {
             String sql = "UPDATE [dbo].[Product]\n"
@@ -283,12 +296,12 @@ public class ProductContext extends DBContext.DBContext {
             PreparedStatement stm = connection.prepareStatement(sql);
             stm.setInt(1, id);
             stm.executeUpdate();
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void updateStatusProduct(int id, String status) {
         try {
             String sql = "UPDATE [dbo].[Product]\n"
@@ -300,12 +313,12 @@ public class ProductContext extends DBContext.DBContext {
             stm.setString(1, status);
             stm.setInt(2, id);
             stm.executeUpdate();
-
+            
         } catch (SQLException ex) {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public void updateDiscountProduct(int id, int discount) {
         try {
             String sql = "INSERT INTO [dbo].[Discount]\n"
@@ -316,7 +329,7 @@ public class ProductContext extends DBContext.DBContext {
             stm.setInt(1, discount);
             stm.executeUpdate();
             int index = getLastIDDisCount();
-
+            
             String sqlUpdate = "UPDATE [dbo].[Product]\n"
                     + "   SET \n"
                     + "      \n"
@@ -331,7 +344,7 @@ public class ProductContext extends DBContext.DBContext {
             Logger.getLogger(ProductContext.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-
+    
     public int getLastIDDisCount() {
         int index = 0;
         try {
@@ -348,6 +361,6 @@ public class ProductContext extends DBContext.DBContext {
             Logger.getLogger(BlogContext.class.getName()).log(Level.SEVERE, null, ex);
         }
         return index;
-
+        
     }
 }

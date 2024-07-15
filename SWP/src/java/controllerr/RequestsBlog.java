@@ -31,15 +31,21 @@ public class RequestsBlog extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         BlogContext blogDB = new BlogContext();
-        if (request.getParameter("type").contains("1")) {
-            ArrayList<Blog> requestAdd = blogDB.getRequestBlogPending("add", "pending");
 
+        if ("1".equals(request.getParameter("mode"))) {
+            ArrayList<Blog> requestAdd = blogDB.getRequestBlog("add", "pending");
+            ArrayList<Blog> requestHistoryAdd = blogDB.getHistoryRequestBlog("add", "pending");
             request.setAttribute("requestAdd", requestAdd);
+            request.setAttribute("requestHistoryAdd", requestHistoryAdd);
         }
-        if (request.getParameter("type").contains("2")) {
-            ArrayList<Blog> requestDelete = blogDB.getRequestBlogPending("delete", "pending");
+
+        if ("2".equals(request.getParameter("mode"))) {
+            ArrayList<Blog> requestDelete = blogDB.getRequestBlog("delete", "pending");
+            ArrayList<Blog> requestHistoryDelete = blogDB.getHistoryRequestBlog("delete", "pending");
             request.setAttribute("requestDelete", requestDelete);
+            request.setAttribute("requestHistoryDelete", requestHistoryDelete);
         }
+
         request.getRequestDispatcher("view/Blog/requestBlog.jsp").forward(request, response);
     }
 
@@ -54,6 +60,7 @@ public class RequestsBlog extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String reject = request.getParameter("reject");
         String accept = request.getParameter("accept");
         BlogContext blogDB = new BlogContext();
@@ -63,11 +70,12 @@ public class RequestsBlog extends HttpServlet {
             }
             if (accept != null) {
                 blogDB.updateStatusBlog(Integer.parseInt(accept), "done", "add");
-
             }
-
-            ArrayList<Blog> requestAdd = blogDB.getRequestBlogPending("add", "pending");
+            ArrayList<Blog> requestHistoryAdd = blogDB.getHistoryRequestBlog("add", "pending");
+            ArrayList<Blog> requestAdd = blogDB.getRequestBlog("add", "pending");
             request.setAttribute("requestAdd", requestAdd);
+            request.setAttribute("requestHistoryAdd", requestHistoryAdd);
+
         }
 
         if ("delete".contains(request.getParameter("type"))) {
@@ -77,9 +85,14 @@ public class RequestsBlog extends HttpServlet {
             if (accept != null) {
                 blogDB.updateStatusBlog(Integer.parseInt(accept), "done", "delete");
             }
-            ArrayList<Blog> requestDelete = blogDB.getRequestBlogPending("delete", "pending");
+            ArrayList<Blog> requestHistoryDelete = blogDB.getHistoryRequestBlog("delete", "pending");
+
+            ArrayList<Blog> requestDelete = blogDB.getRequestBlog("delete", "pending");
             request.setAttribute("requestDelete", requestDelete);
+            request.setAttribute("requestHistoryDelete", requestHistoryDelete);
         }
+        
+        request.setAttribute("mode", request.getParameter("mode"));
         request.getRequestDispatcher("view/Blog/requestBlog.jsp").forward(request, response);
 
     }

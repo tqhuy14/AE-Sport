@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
+
 import java.sql.*;
+
 /**
  *
  * @author Hoàng Sơn
  */
 public class Blog {
+
     private int Blog_ID;
     private String title;
     private String img;
@@ -16,8 +19,18 @@ public class Blog {
     private String detail;
     private int stype;
     private String authorString;
-    private  int number_of_views;
+    private int number_of_views;
     private CategoryBlog ca;
+    private StatusBlog statusBlog;
+
+    public StatusBlog getStatusBlog() {
+        return statusBlog;
+    }
+
+    public void setStatusBlog(StatusBlog statusBlog) {
+        this.statusBlog = statusBlog;
+    }
+
     public Blog() {
     }
 
@@ -93,9 +106,4 @@ public class Blog {
         this.ca = ca;
     }
 
-    
-    
-
-   
-    
 }
